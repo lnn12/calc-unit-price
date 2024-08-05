@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金額と数量の計算</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+        .result-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            width: 80px; /* 結果のテキストボックスの幅を狭く */
+        }
+        .highlight {
+            background-color: #d4edda; /* ハイライトする色 */
+        }
+        .input-box {
+            width: 80px; /* 金額と数量のテキストボックスの幅を調整 */
+        }
+        .form-control::-webkit-inner-spin-button,
+        .form-control::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .form-control {
+            -moz-appearance: textfield;
+        }
+        .center-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">金額と数量の計算</h1>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 center-content">
+                <!-- 1セット目 -->
+                <div class="form-group row align-items-center">
+                    <div class="col-auto">
+                        <label for="amount1">金額</label>
+                        <input type="number" id="amount1" class="form-control input-box" oninput="calculate()">
+                    </div>
+                    <div class="col-auto">
+                        <label for="quantity1">数量</label>
+                        <input type="number" id="quantity1" class="form-control input-box" oninput="calculate()">
+                    </div>
+                    <div class="col-auto">
+                        <label for="result1">結果</label>
+                        <input type="text" id="result1" class="form-control result-box" readonly>
+                    </div>
+                </div>
+                <!-- 2セット目 -->
+                <div class="form-group row align-items-center">
+                    <div class="col-auto">
+                        <label for="amount2">金額</label>
+                        <input type="number" id="amount2" class="form-control input-box" oninput="calculate()">
+                    </div>
+                    <div class="col-auto">
+                        <label for="quantity2">数量</label>
+                        <input type="number" id="quantity2" class="form-control input-box" oninput="calculate()">
+                    </div>
+                    <div class="col-auto">
+                        <label for="result2">結果</label>
+                        <input type="text" id="result2" class="form-control result-box" readonly>
+                    </div>
+                </div>
+                <!-- 3セット目 -->
+                <div class="form-group row align-items-center">
+                    <div class="col-auto">
+                        <label for="amount3">金額</label>
+                        <input type="number" id="amount3" class="form-control input-box" oninput="calculate()">
+                    </div>
+                    <div class="col-auto">
+                        <label for="quantity3">数量</label>
+                        <input type="number" id="quantity3" class="form-control input-box" oninput="calculate()">
+                    </div>
+                    <div class="col-auto">
+                        <label for="result3">結果</label>
+                        <input type="text" id="result3" class="form-control result-box" readonly>
+                    </div>
+                </div>
+                <!-- 4セット目 -->
+                <div class="form-group row align-items-center">
+                    <div class="col-auto">
+                        <label for="amount4">金額</label>
+                        <input type="number" id="amount4" class="form-control input-box" oninput="calculate()">
+                    </div>
+                    <div class="col-auto">
+                        <label for="quantity4">数量</label>
+                        <input type="number" id="quantity4" class="form-control input-box" oninput="calculate()">
+                    </div>
+                    <div class="col-auto">
+                        <label for="result4">結果</label>
+                        <input type="text" id="result4" class="form-control result-box" readonly>
+                    </div>
+                </div>
+                <!-- 5セット目 -->
+                <div class="form-group row align-items-center">
+                    <div class="col-auto">
+                        <label for="amount5">金額</label>
+                        <input type="number" id="amount5" class="form-control input-box" oninput="calculate()">
+                    </div>
+                    <div class="col-auto">
+                        <label for="quantity5">数量</label>
+                        <input type="number" id="quantity5" class="form-control input-box" oninput="calculate()">
+                    </div>
+                    <div class="col-auto">
+                        <label for="result5">結果</label>
+                        <input type="text" id="result5" class="form-control result-box" readonly>
+                    </div>
+                </div>
+                <!-- リセットボタン -->
+                <div class="form-group">
+                    <button class="btn btn-danger" onclick="reset()">リセット</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function calculate() {
+            let minResult = Infinity;
+            const results = [];
+            
+            // Calculate results for each set
+            for (let i = 1; i <= 5; i++) {
+                const amount = parseFloat(document.getElementById(`amount${i}`).value) || 0;
+                const quantity = parseFloat(document.getElementById(`quantity${i}`).value) || 0;
+                const resultBox = document.getElementById(`result${i}`);
+                
+                if (quantity > 0) {
+                    const result = (amount / quantity).toFixed(2);
+                    results[i - 1] = result;
+                    resultBox.value = result;
+                    minResult = Math.min(minResult, parseFloat(result)); // Ensure numerical comparison
+                } else {
+                    resultBox.value = '';
+                }
+            }
+            
+            // Highlight the smallest result
+            for (let i = 1; i <= 5; i++) {
+                const resultBox = document.getElementById(`result${i}`);
+                const resultValue = parseFloat(resultBox.value);
+                
+                // Remove highlight from all results
+                resultBox.classList.remove('highlight');
+                
+                // Add highlight to the smallest result
+                if (resultValue === minResult && minResult !== Infinity) {
+                    resultBox.classList.add('highlight');
+                }
+            }
+        }
+
+        function reset() {
+            if (confirm('リセットしますか？')) {
+                for (let i = 1; i <= 5; i++) {
+                    document.getElementById(`amount${i}`).value = '';
+                    document.getElementById(`quantity${i}`).value = '';
+                    document.getElementById(`result${i}`).value = '';
+                }
+                // Remove highlight from all results
+                const resultBoxes = document.querySelectorAll('.result-box');
+                resultBoxes.forEach(box => box.classList.remove('highlight'));
+            }
+        }
+    </script>
+</body>
+</html>
+
